@@ -5,8 +5,14 @@
 import subprocess
 import datetime
 
+import pandas as pd
+
 
 def drop_cols(df, type="phy"):
+    # print(123123123132123)
+    # print(df)
+    if type=="phy":
+        df = pd.read_csv('fiziksel.csv')
     drop_list = ['Memory Pages Swapped out', 'Cpu Mode Nice Load', 'Cpu Mode IOwait Load', 'Write Wait Time Avg',
                  'Sockstat TCP Orphan','TCP Error Retrans', 'TCP Error Retransegs', 'TCP Out RST flag',
                  'Disk Reads Completed', 'Disk Read Megabytes', 'Cpu Mode Nice Load', 'I/O Utilization',
@@ -20,62 +26,74 @@ def drop_cols(df, type="phy"):
 
     def eliminate_securely(df, col_name):
         try:
-            df.drop(columns=[col_name], inplace=True)
+            df = df.drop(columns=[col_name], inplace=True)
+            # print("***********")
+            # print(df)
         except:
             print("couln't find") # done
 
         return df
 
 
-    dfs = subprocess.Popen(['powershell.exe', "ls -n"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    dfs = dfs.stdout.read().decode().split("\n")
+    # dfs = subprocess.Popen(['powershell.exe', "ls -n"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # dfs = dfs.stdout.read().decode().split("\n")
 
 
     for files in list(range(1)):
-        print(files)
-        #files = files[0:len(files)-1]
-        try:
-            #df = pd.read_csv('sanal.csv', index_col=0)
-            print()
-            #node = pd.read_csv('sanal.csv')
-            node = df
-            node_exp = node.iloc[:, 1:]
-            node_exp = node_exp.loc[:, (node_exp != 0).any(axis=0)]
-
-            print(1)
-            def time_changer2(time: str("2023-04-22 16:35:11")):
-                format_date = ("%Y-%m-%d %H:%M:%S")
-                dt = datetime.datetime.strptime(time, '%Y-%m-%d  %H:%M:%S')
-                df_string = dt.strftime(format_date)
-                return (datetime.datetime.strptime(df_string, format_date))
-
-
-            # df['Date Time'] = pd.to_datetime(df['Date Time'])
+        if type == 'vir':
+            print(files)
+            #files = files[0:len(files)-1]
             try:
-                node_exp['time_stamp'] = node_exp.apply(lambda x: time_changer2(x['time_stamp']), axis=1)
-            except:
-                print(2)
-            #pdu['time'] = pdu.apply(lambda x: time_changer2(x['time']), axis=1)
-            try:
-                node_exp = node_exp.rename(columns={'time_stamp': 'index'})
-                node_exp = node_exp.set_index('index')
-                print(3)
-                #pdu = pdu.rename(columns={'time': 'index'})
-                #pdu = pdu.set_index('index')
-                df = node_exp
-                cols = df.columns
-            except:
-                print("okey")
+                #df = pd.read_csv('sanal.csv', index_col=0)
+                # print()
+                #node = pd.read_csv('sanal.csv')
+                node = df
+                node_exp = node.iloc[:, 1:]
+                node_exp = node_exp.loc[:, (node_exp != 0).any(axis=0)]
 
-        except:
-            print("puff")
-            df = 1
+                print(1)
+                def time_changer2(time: str("2023-04-22 16:35:11")):
+                    format_date = ("%Y-%m-%d %H:%M:%S")
+                    dt = datetime.datetime.strptime(time, '%Y-%m-%d  %H:%M:%S')
+                    df_string = dt.strftime(format_date)
+                    return (datetime.datetime.strptime(df_string, format_date))
+
+
+                # df['Date Time'] = pd.to_datetime(df['Date Time'])
+                try:
+                    node_exp['time_stamp'] = node_exp.apply(lambda x: time_changer2(x['time_stamp']), axis=1)
+                except:
+                    print(2)
+                #pdu['time'] = pdu.apply(lambda x: time_changer2(x['time']), axis=1)
+                try:
+                    node_exp = node_exp.rename(columns={'time_stamp': 'index'})
+                    node_exp = node_exp.set_index('index')
+                    print(3)
+                    #pdu = pdu.rename(columns={'time': 'index'})
+                    #pdu = pdu.set_index('index')
+
+                    df = node_exp
+                    #cols = df.columns
+                except:
+                    # print("00000000000000000000000")
+                    # print(df)
+
+                    print("okey")
+
+            except:
+                print("puff")
+                df = pd.read_csv('fiziksel.csv')
 
         for i in drop_list:
             eliminate_securely(df, i)
         ###
         try:
             if type=="phy":
+                try:
+                    df = df.set_index('index')
+                except:
+
+                    print(df)
                 df.to_csv("fiziksel.csv")
 
                 return df
