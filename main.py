@@ -121,7 +121,7 @@ for files in names_list:
     if files[0:6] == "aypos1":
         aypos1.append(files)
 
-    elif files[0:6] == "aypos2":
+    elif files[0:7] == "ayposv2":
         aypos2.append(files)
     elif files[0:6] == "aypos3":
         aypos3.append(files)
@@ -537,10 +537,12 @@ for i in range(len(compute2_time)):
 
 #idle = pd.merge(hold, hold_ilo, left_index=True, right_index=True, how='inner')
 idle = hold
-# idle.to_csv("sanal.csv")
+idle.to_csv("fiziksel.csv")
 
 # subprocess.run(['python.exe', 'eliminate_cols.py'])
-drop_cols(idle, "phy")
+print("----------------------")
+print(idle)
+drop_cols("phy")
 
 # for aypos2s in aypos2:
 
