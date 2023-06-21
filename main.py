@@ -1,8 +1,13 @@
+# written by loyalone
+# merge snmp and node exporter dataframes
+
 import subprocess
 import os
 from subprocess import call
 import pandas as pd
 import datetime
+from eliminate_cols import drop_cols
+from virtual_parser import vir_parse
 
 """#os.putenv('COMSPEC',r'C:\Windows\System32\WindowsPowe rShell\v1.0\powershell.exe')
 p=subprocess.call(f'C:\Windows\System32\powershell.exe ls',stdout=subprocess.PIPE ,shell=True)
@@ -35,6 +40,8 @@ def merger(node_file, snmp_file):
         return (datetime.datetime.strptime(df_string, format_date))
 
     # df['Date Time'] = pd.to_datetime(df['Date Time'])
+    # store = pd.Series(node_exp['time_stamp'])
+    # print(store)
     node_exp['time_stamp'] = node_exp.apply(lambda x: time_changer2(x['time_stamp']), axis=1)
 
     pdu['time'] = pdu.apply(lambda x: time_changer2(x['time']), axis=1)
@@ -530,7 +537,23 @@ for i in range(len(compute2_time)):
 
 #idle = pd.merge(hold, hold_ilo, left_index=True, right_index=True, how='inner')
 idle = hold
-idle.to_csv("idle.csv")
+# idle.to_csv("sanal.csv")
+
+# subprocess.run(['python.exe', 'eliminate_cols.py'])
+drop_cols(idle, "phy")
+
+# for aypos2s in aypos2:
+
+if len(aypos2) == 1:
+    subprocess.run(["powershell.exe", f"Rename-Item {aypos2[0]} -NewName sanal.csv"])
+else:
+    print("multiple aypos2 file there must be 1")
+    exit(1)
+
+df = drop_cols(pd.read_csv("sanal.csv"), "vir")
+
+vir_parse(df)
+# subprocess.run(['python.exe', 'eliminate_cols.py'])
 
 """for filess in names_list:
     leng = len(filess)
