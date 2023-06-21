@@ -21,14 +21,16 @@ def vir_parse(sanal_node):
 
 
     # random forest mlp xgboost
-    sanal_node['time_stamp'] = sanal_node.apply(lambda x: time_changer2(x['time_stamp']), axis=1)
+    try:
+        sanal_node['time_stamp'] = sanal_node.apply(lambda x: time_changer2(x['time_stamp']), axis=1)
 
-    # phy_mac = phy_mac.set_index('index')
-    sanal_node = sanal_node.rename(columns={'time_stamp': 'index'})
-    sanal_node = sanal_node.set_index('index')
-    sanal_node.to_csv('new.csv')
-
-    sanal_node = pd.read_csv('new.csv')
+        # phy_mac = phy_mac.set_index('index')
+        sanal_node = sanal_node.rename(columns={'time_stamp': 'index'})
+        sanal_node = sanal_node.set_index('index')
+        sanal_node.to_csv('new.csv')
+    except:
+        print("ben ypamadım o yaptı")
+    # sanal_node = pd.read_csv('new.csv')
     #print(sanal_node.index)
     # print(type(phy_mac.index.to_series()))
     #print(phy_mac.index.to_series())
