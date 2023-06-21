@@ -1,10 +1,33 @@
+# written by loyalone
+# eliminate empty columns
+
 import pandas as pd
 import subprocess
+import datetime
+
+drop_list = ['Memory Pages Swapped out', 'Cpu Mode Nice Load', 'Cpu Mode IOwait Load', 'Write Wait Time Avg',
+             'Sockstat TCP Orphan','TCP Error Retrans', 'TCP Error Retransegs', 'TCP Out RST flag',
+             'Disk Reads Completed', 'Disk Read Megabytes', 'Cpu Mode Nice Load', 'I/O Utilization',
+             'Disk Reads Completed', 'Disk Read Megabytes', 'I/O Utilization', 'Read Wait Time Avg',
+             'Average Queue Size', 'Write Wait Time Avg', 'Sockstat TCP Orphan', 'TCP Error Retrans',
+             'Memory Swap Cache','TCP Error Retransegs', 'TCP Out RST flag','UDP Noports', 'Swap Space Used',
+             'Swap Used Percentage', 'Hardware Corrupted', 'Cpu Mode IRQ load', 'Memory Shemhugepages',
+             'Memory Shempmd Mapped Pages', 'Network Transmitted lo',  'Memory Swap Cache', 'Memory Swap Cache',
+             'Memory Swap Cache']
+
+
+def eliminate_securely(df, col_name):
+    try:
+        df.drop(columns=[col_name], inplace=True)
+    except:
+        print("couln't find") # done
+
+    return df
 
 
 dfs = subprocess.Popen(['powershell.exe', "ls -n"], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 dfs = dfs.stdout.read().decode().split("\n")
-import datetime
+
 
 for files in list(range(1)):
     print(files)
@@ -45,207 +68,8 @@ for files in list(range(1)):
         print("puff")
         df = 1
 
-    try:
-        df.drop(columns=['Memory Pages Swapped out'], inplace=True)
-    except:
-        print("nothin") # done
-    try:
-        df.drop(columns=['Cpu Mode Nice Load'], inplace=True)
-    except:
-        print("nothin") # done
-
-    try:
-        df.drop(columns=['Cpu Mode IOwait Load'], inplace=True)
-    except:
-        print("nothin") # done
-
-    try:
-        df.drop(columns=['Processes Blocked'], inplace=True)
-    except:
-        print("nothin") # done
-
-    try:
-        df.drop(columns=['Read Wait Time Avg'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Write Wait Time Avg'], inplace=True)
-    except:
-        print("nothin")
-
-
-    try:
-        df.drop(columns=['Sockstat TCP Orphan'], inplace=True)
-    except:
-        print("nothin")
-
-
-    try:
-        df.drop(columns=['TCP Error Retrans'], inplace=True)
-    except:
-        print("nothin")
-
-
-    try:
-        df.drop(columns=['TCP Error Retransegs'], inplace=True)
-    except:
-        print("nothin")
-    try:
-        df.drop(columns=['TCP Out RST flag'], inplace=True)
-
-
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Disk Reads Completed'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Disk Read Megabytes'], inplace=True)
-    except:
-        print("nothin")
-
-
-
-
-
-    try:
-        df.drop(columns=['I/O Utilization'], inplace=True)
-
-
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Cpu Mode Nice Load'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Disk Reads Completed'], inplace=True)
-    except:
-        print("nothin")
-
-
-
-
-
-    try:
-        df.drop(columns=['Disk Read Megabytes'], inplace=True)
-
-
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['I/O Utilization'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Read Wait Time Avg'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Write Wait Time Avg'], inplace=True)
-    except:
-        print("nothin")
-
-
-    try:
-        df.drop(columns=['Average Queue Size'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Sockstat TCP Orphan'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['TCP Error Retrans'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['TCP Error Retransegs'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['TCP Out RST flag'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['UDP Noports'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Memory Swap Cache'], inplace=True)
-    except:
-        print("nothin")
-
-    #######
-    try:
-        df.drop(columns=['Swap Space Used'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Swap Used Percentage'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Hardware Corrupted'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Cpu Mode IRQ load'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Memory Shemhugepages'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Memory Shempmd Mapped Pages'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Network Transmitted lo'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=[''], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Memory Swap Cache'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Memory Swap Cache'], inplace=True)
-    except:
-        print("nothin")
-
-    try:
-        df.drop(columns=['Memory Swap Cache'], inplace=True)
-    except:
-        print("nothin")
+    for i in drop_list:
+        eliminate_securely(df, i)
     ###
     try:
         df.to_csv("1.csv")
